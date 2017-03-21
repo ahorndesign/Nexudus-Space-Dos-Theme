@@ -1,4 +1,4 @@
-Nexudus Spaces - Default Theme
+Nexudus Spaces - DOS Theme
 ============================
 
 These are the original files for the DOS theme in [Nexudus Spaces](http://coworking.nexudus.com/ "Nexudus Spaces"). 
