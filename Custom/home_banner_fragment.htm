@@ -1,0 +1,12 @@
+{% CaptureInt imageIndex %}{% Random 0, data.Local.Gallery.size %}{% endCaptureInt %}
+<div class="jumbo" style="background-image: url({% if data.Local.Gallery.size == 0 %}'/content/themes/public/dos/img/cover-example-2.jpg'{% else %}'{% Url Content, Images, name: data.Local.Gallery[imageIndex].Name w: 1170, h: 350, quality: 100 %}'{% endif %})">
+  <div class="jumbo__texts">
+    
+    <h1 class="text-mega jumbo__title">{% T data.Setting_HomePage_BannerText || {{ data.Business.Name }} %}</h1>
+    <h2 class="h3 jumbo__subtitle">{% T data.Setting_HomePage_BannerSmallText %}</h2>
+    <a href="{% Url Signup, Index %}" class="btn btn--primary btn--lg">{% T Become a member %}</a>
+    {% if data.Setting_PublicWebSite_Contact %}
+    <a href="{% Url About, Index %}" class="btn btn--primary btn--lg">{% T Visit us %}</a>
+    {% endif %}
+  </div>
+</div>

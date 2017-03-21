@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    {% block meta %}{% endblock %}
+    {% for language in data.Languages %}{% if language.Culture != data.Language %}
+    {% assign currentLanguagePrefix = '/' | Append:data.Language | Append: '/' %}
+    {% assign thisLanguagePrefix = language.Culture | Append: '/' %}
+    <link href="/{{ data.URL | Replace: currentLanguagePrefix, thisLanguagePrefix }}" hreflang="{{ language.Culture }}" rel="alternate">
+    {% endif %}
+    {% endfor %}
+
+    <title>{{ data.Business.Name }} - {% block title %}{% endblock %}</title>
+
+    <!-- META -->
+    <meta name="description" content="{% block description %}{{ data.Business.Name }}{% endblock %}"/>
+    <meta name="keywords" content="{% block keywords %}coworking space booking meeting rooms events desks hot-desks{% endblock %}"/>
+    <meta name="author" content="{{ data.Business.Name }}">
+	
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% Url CSS, Index %}">
+    
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/default/libs/fullcalendar-scheduler/lib/fullcalendar.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/default/libs/fullcalendar-scheduler/scheduler.min.css"/>
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/default/libs/fullcalendar-scheduler/views/list.css"/>
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/themes/classic.css">
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/themes/classic.date.css">
+    <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/themes/classic.time.css">
+
+    <!-- FAVICONS -->
+    <link rel="icon" type="image/x-icon" sizes="16x16 32x32" href="img/favicons/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="img/favicons/favicon-152.png">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="img/favicons/favicon-144.png">
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="img/favicons/favicon-120.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/favicons/favicon-114.png">
+    <link rel="apple-touch-icon-precomposed" sizes="180x180" href="img/favicons/favicon-180.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="img/favicons/favicon-72.png">
+    <link rel="apple-touch-icon-precomposed" href="img/favicons/favicon-57.png">
+    <link rel="icon" href="img/favicons/favicon-32.png" sizes="32x32">
+    <meta name="msapplication-TileColor" content="#FFFFFF">
+    <meta name="msapplication-TileImage" content="img/favicons/favicon-144.png">
+    <link rel="icon" sizes="192x192" href="img/favicons/favicon-192.png">
+
+    <!-- OPEN GRAPH TAGS -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="http://marimba-coworking.com">
+    <meta property="og:title" content="Marimba Coworking">
+    <meta property="og:description" content="Zeta coworking in Barcelona.">
+    <meta property="og:image" content="/img/marimba-og-image.png">
+
+    <!-- TWITTER CARDS -->
+    <meta name="twitter:card" content="photo">
+    <meta name="twitter:site" content="@marimbacoworking">
+    <meta name="twitter:title" content="Marimba Coworking">
+    <meta name="twitter:image" content="http://marimba-coworking.com/img/marimba-og-image.png">
+    <meta name="twitter:url" content="http://marimba-coworking.com/">
+
+  </head>
+
+  <body>
+
+    <main class="content content--signup" role="main">
+      {% block notifications %}
+      {% include core_notifications_fragment.htm %}
+      {% endblock %}
+      {% block main %}{% endblock %}
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/jquery-2.2.1.min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/js/knockout-3.0.2-min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/js/knockout.mapping-latest.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/js/knockout.validation.min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/picker.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/picker.date.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/picker.time.js"></script>
+    {% if data.Language != 'en' %}
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/translations/{{ data.Language }}_{{ data.Language }}.js" charset="UTF-8"></script>
+    {% endif %}
+        
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/lodash.min.js"></script>
+
+    <script type="text/javascript" src="{% Url JS, Index %}"></script>
+    <script>
+      var app = new App();
+    </script>
+    <!-- END JAVASCRIPT -->
+    {% block scripts %}
+    {% endblock %}
+  </body>
+</html>
+

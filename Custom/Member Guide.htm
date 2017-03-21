@@ -1,0 +1,21 @@
+{% extends master.master %}
+{% block title %}{{ data.Local.Page.Title }}{% endblock %}
+{% block main %}
+
+<div class="container">
+    <!-- BREADCRUMBS -->
+    <ol class="breadcrumb">
+        <li><a href="{{ data.Business.HomeUrl }}">{% T Home %}</a></li>
+        <li class="active">{{ data.Local.Page.Title }}</li>
+    </ol>
+    <!-- END BREADCRUMBS -->
+    <h1>{{ data.Local.Page.Title }}</h1>
+    {% if data.Local.Page.HasImage %}
+    <img class="thumbnail" src="{% Url Page, Image, id: data.Local.Page.Id, w: 1024 %}" />
+    {% endif %}
+    {{ data.Local.Page.Description }}
+
+</div>
+{% endblock %}
+{% block scripts %}
+{% endblock %}

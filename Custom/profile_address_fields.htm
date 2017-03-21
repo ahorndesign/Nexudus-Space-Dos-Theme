@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <label class="control-label" for="Address">{% T Address %}</label>
+      <textarea class="form-control" rows="3" id="Address" data-bind="value: Address" placeholder="{% T Your personal address %}"></textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="CityName">{% T Town %}</label>
+      <input type="text" class="form-control" id="CityName" data-bind="value: CityName">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="State">{% T State / Province %}</label>
+      <input type="text" class="form-control" id="State" data-bind="value: State">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="PostCode">{% T Zip / Postcode %}</label>
+      <input type="text" class="form-control" id="PostCode" data-bind="value: PostCode">
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="BillingName">{% T Company/Organization Name %}</label>
+      <input type="text" class="form-control" id="BillingName" data-bind="value: BillingName">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="TaxIDNumber">{% T VAT / Tax Number %}</label>
+      <input type="text" class="form-control" id="TaxIDNumber" data-bind="value: TaxIDNumber">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="ProfileWebsite">{% T Company Website %}</label>
+      <input type="text" class="form-control" id="ProfileWebsite" data-bind="value: ProfileWebsite" placeholder="http://example.com">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group form-group--related-top">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" data-bind="checked: hasBillingDetails"> {% T My billing details are different than my personal details. %}
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

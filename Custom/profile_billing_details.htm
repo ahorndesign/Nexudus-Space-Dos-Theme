@@ -1,0 +1,36 @@
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <label class="control-label" for="cAddress">{% T Billing Address %}</label>
+      <textarea class="form-control" rows="3" id="BillingAddress" data-bind="value: BillingAddress" placeholder="{% T Your billing address %}"></textarea>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="BillingCityName">{% T Billing Town %}</label>
+      <input type="text" class="form-control" id="BillingCityName" data-bind="value: BillingCityName">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="BillingState">{% T Billing State / Province %}</label>
+      <input type="text" class="form-control" id="BillingState" data-bind="value: BillingState">
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="form-group">
+      <label class="control-label" for="BillingPostCode">{% T Billing Zip / Postcode %}</label>
+      <input type="text" class="form-control" id="BillingPostCode" data-bind="value: BillingPostCode">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-12">
+    <div class="form-group">
+      <label class="control-label" for="BillingEmail">{% T Send my invoices to %}</label>
+      <input type="email" class="form-control" id="BillingEmail" data-bind="value: BillingEmail" placeholder="accounts@example.com">
+    </div>
+  </div>
+</div>
