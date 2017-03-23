@@ -23,7 +23,7 @@
 {% endif %}
 
 
-{% if data.Settings_HomePage_ShowServicesBar %}
+{% if data.Setting_HomePage_ShowServicesBar %}
 <!-- OUR SERVICES -->
 {% include home_services_fragment.htm %}
 <!-- END OUR SERVICES -->
@@ -54,17 +54,21 @@
 <!-- END EVENTS LIST -->
 
 <!-- USERS LIST -->
+{% if data.Setting_PublicWebSite_Directory %}
 {% include home_checkedin_fragment.htm %}
+{% endif %}
 <!-- END USERS LIST -->
 
 <!-- SPACE LOCATIONS -->
-{% if data.Businesses.size > 1 %}
+{% if data.Businesses.size > 2 %}
 {% include home_locations.htm %}
 {% endif %}
 <!-- END SPACE LOCATIONS -->
 
 <!-- CLAIM BANNER -->
+{% if data.Setting_HomePage_ShowFooterClaimBar %}
 {% include home_claim_bottom_fragment.htm %}
+{% endif %}
 <!-- END CLAIM BANNER -->
 
 <!-- NEWSLETTER BANNER -->

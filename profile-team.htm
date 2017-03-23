@@ -133,14 +133,14 @@
                 </div>
             </fieldset>
             <fieldset>
-              <div class="row" data-bind="if: $root.profileTags()">
+              <div class="row">
                 <div class="col-sm-12">
                 <div class="form-group">
                   <label class="control-label" for="Team_SignupLink">{% T Invite Link %}</label>
                   <div class="input-group">
-                    <input readonly="readonly" class="form-control" type="text" id="Team_SignupLink" value="{{ data.Business.HomeUrl }}.{{ data.PublicSiteSubDomain }}/{{ data.Language }}/signup/{{ data.Coworker.PaysForTeam.UniqueId }}" class="span12">
+                    <input readonly="readonly" class="form-control" type="text" id="Team_SignupLink" value="{{ data.Business.HomeUrl }}/{{ data.Language }}/signup/{{ data.Coworker.PaysForTeam.UniqueId }}" class="span12">
                     <span class="input-group-addon">
-                        <i class="fa fa-copy" style="cursor: pointer" onclick="app.copyToClipboard('{{ data.Business.HomeUrl }}.{{ data.PublicSiteSubDomain }}/{{ data.Language }}/signup/{{ data.Coworker.PaysForTeam.UniqueId }}'); app.showMessage('{% T The link has been copied to your clipboard %}')" data-toggle="tooltip" title="" data-original-title="{% T Copy link to clipboard %}"></i>
+                        <i class="fa fa-copy" style="cursor: pointer" onclick="app.copyToClipboard('{{ data.Business.HomeUrl }}/{{ data.Language }}/signup/{{ data.Coworker.PaysForTeam.UniqueId }}'); app.showMessage('{% T The link has been copied to your clipboard %}')" data-toggle="tooltip" title="" data-original-title="{% T Copy link to clipboard %}"></i>
                     </span>
                   </div>
                   

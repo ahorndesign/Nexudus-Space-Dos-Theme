@@ -87,7 +87,7 @@
                   </div>
                   <div class="col-sm-3 form-inline">
                     <div class="form-group">
-                      <label for="">Qty:</label>
+                      <label for="">{% T Qty: %}</label>
                       <select class="form-control form-control--auto" data-bind="value: Quantity, optionsCaption: '', options: qtys, visible: IsAvailableNow() && !SoldOut()" style="width:70px"></select>
                       <select class="form-control form-control--auto" data-bind="visible: !IsAvailableNow() || SoldOut()" disabled="disabled"><option>0</option></select>
                     </div>
@@ -131,7 +131,7 @@
             </div>
             <!-- END ATENDEES -->
 
-            <div class="purchase-total">
+            <div class="purchase-total" data-bind="visible: attendees().length > 0">
               <b>{% T Discount Code %}:</b>
                 <input class="form-control" type="text" data-bind="value: discountCode, valueUpdate: 'keyup'" />
                 <div data-bind="with: discountCodeInfo">

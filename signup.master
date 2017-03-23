@@ -23,7 +23,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% Url CSS, Index %}">
+    <link rel="stylesheet" type="text/css" href="{% Url CSS, Index %}?v=dos">
     
     <link rel="stylesheet" type="text/css" href="/content/themes/public/dos/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="/content/themes/public/default/libs/fullcalendar-scheduler/lib/fullcalendar.min.css"/>
@@ -47,19 +47,22 @@
     <meta name="msapplication-TileImage" content="img/favicons/favicon-144.png">
     <link rel="icon" sizes="192x192" href="img/favicons/favicon-192.png">
 
+    {% block socialTags %}
     <!-- OPEN GRAPH TAGS -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="http://marimba-coworking.com">
-    <meta property="og:title" content="Marimba Coworking">
-    <meta property="og:description" content="Zeta coworking in Barcelona.">
-    <meta property="og:image" content="/img/marimba-og-image.png">
-
+    <meta property="og:url" content="http://{{ data.Domain }}">
+    <meta property="og:title" content="{{ data.Business.Name }}">
+    <meta property="og:description" content="{{ data.Business.ShortDescription }}">
+    <meta property="og:image" content="http://{{ data.Domain }}{% Url Business, GetLogo, h:240,w: 240 %}">
+    
     <!-- TWITTER CARDS -->
-    <meta name="twitter:card" content="photo">
-    <meta name="twitter:site" content="@marimbacoworking">
-    <meta name="twitter:title" content="Marimba Coworking">
-    <meta name="twitter:image" content="http://marimba-coworking.com/img/marimba-og-image.png">
-    <meta name="twitter:url" content="http://marimba-coworking.com/">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@{{ data.Setting_Social_Twitter }}">
+    <meta name="twitter:title" content="{{ data.Business.Name }}">
+    <meta name="twitter:description" content="{{ data.Business.ShortDescription  }}">
+    <meta name="twitter:image" content="http://{{ data.Domain }}{% Url Business, GetLogo, h: 240, w: 240 %}">
+    <meta name="twitter:image:alt" content="{{ data.Business.Name }}">
+    {% endblock %}
 
   </head>
 
@@ -73,23 +76,31 @@
     </main>
 
     <!-- JAVASCRIPT -->
+    <!-- JAVASCRIPT -->
     <script type="text/javascript" src="/content/themes/public/dos/js/vendor/jquery-2.2.1.min.js"></script>
     <script type="text/javascript" src="/content/themes/public/dos/js/vendor/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/jquery.matchHeight-min.js"></script>
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
     <script type="text/javascript" src="/content/themes/public/default/js/knockout-3.0.2-min.js"></script>
     <script type="text/javascript" src="/content/themes/public/default/js/knockout.mapping-latest.js"></script>
     <script type="text/javascript" src="/content/themes/public/default/js/knockout.validation.min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/lodash.min.js"></script>
     <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/picker.js"></script>
     <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/picker.date.js"></script>
     <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/picker.time.js"></script>
     {% if data.Language != 'en' %}
     <script type="text/javascript" src="/content/themes/public/dos/js/vendor/pickadate.js-master/lib/compressed/translations/{{ data.Language }}_{{ data.Language }}.js" charset="UTF-8"></script>
     {% endif %}
-        
+    
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment-with-locales.min.js"></script>
-    <script type="text/javascript" src="/content/themes/public/dos/js/vendor/lodash.min.js"></script>
+    
 
-    <script type="text/javascript" src="{% Url JS, Index %}"></script>
+    <script type="text/javascript" src="/content/themes/public/default/libs/fullcalendar-scheduler/lib/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/libs/fullcalendar-scheduler/lib/lang-all.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/libs/fullcalendar-scheduler/lib/gcal.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/libs/fullcalendar-scheduler/scheduler.js"></script>
+    <script type="text/javascript" src="/content/themes/public/default/libs/fullcalendar-scheduler/views/listView.js"></script>
+
+    <script type="text/javascript" src="{% Url JS, Index %}?v=dos"></script>
     <script>
       var app = new App();
     </script>

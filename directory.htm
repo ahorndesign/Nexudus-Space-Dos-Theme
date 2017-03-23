@@ -208,7 +208,7 @@
   <!-- END TEAMS LIST -->
   <!-- PAGINATION -->
   {% if data.Local.AllMembersByName.size > 0 or data.Local.TeamsByName.size > 0 %}
-    {% if data.Action == 'Members' %}
+    {% if data.Action == 'members' %}
     {% assign pagedRecords = data.Local.AllMembersByName %}
     {% else %}
     {% assign pagedRecords = data.Local.TeamsByName %}

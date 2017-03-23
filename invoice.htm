@@ -39,10 +39,14 @@
       </div>
       <div id="invoice-info" style="width: 400px">
         <h2>
-          {% if data.Local.Invoice.TotalAmount > 0 % %}
-          {% T Invoice %}
+          {% if data.Local.Invoice.Draft %}
+              {% T Draft Invoice %}
           {% else %}
-          {% T Credit Note %}
+              {% if data.Local.Invoice.TotalAmount > 0 % %}
+              {% T Invoice %}
+              {% else %}
+              {% T Credit Note %}
+              {% endif %}
           {% endif %}
           <strong>{{ data.Local.Invoice.InvoiceNumber }}</strong></h2>
           <p>{{ data.Local.Invoice.CreatedOn | Date: 'D' }}</p>

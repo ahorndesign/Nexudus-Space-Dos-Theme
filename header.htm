@@ -25,7 +25,7 @@
         <!-- LOGO OR SPACE NAME -->
         <a class="navbar-brand" href="{{ data.Business.HomeUrl }}">
           {% if data.Business.HasLogo %}
-          <img src="{% Url Business, GetLogo, w:600, h:200, mode: 'max' %}" alt="{{ data.Business.Name }}">
+          <img src="{% Url Business, GetLogo, w:600, h:200, mode: 'pad' %}" alt="{{ data.Business.Name }}">
           {% else %}
           <img src="http://placehold.it/600x200/FFFFFF?text={{ data.Business.Name }}" alt="{{ data.Business.Name }}">
           {% endif %}
@@ -92,7 +92,7 @@
         
         <!-- USER NAVIGATION -->
         <ul class="navbar-nav navbar-nav--user">
-          {% if data.UserIsLoggedIn and data.Setting_PublicWebSite_Tour %}
+          {% if data.Setting_PublicWebSite_Tour %}
           <li class="{% if data.Controller == 'tour'%}active{%endif%}"><a href="{% Url Tour, Index %}">{% T Take a Tour %}</a></li>
           {% endif %}
           {% if data.Setting_PublicWebSite_Help %}

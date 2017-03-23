@@ -25,7 +25,7 @@
 <meta property="og:image:secure_url" content="https://{{ data.Business.WebAddress }}.{{ data.PublicSiteSubDomain }}{% Url Events, GetLargeImage, id: data.Local.Event.Id, w: 800  %}" />
 {% endif %}
 <meta property="og:description" content="{{ data.Local.Event.ShortDescription | StripHtml }}" />
-<meta property="og:site_name" content="{{ data.Business.Name }}" />
+<meta property="og:site_name" content="{{ data.Local.Event.Name | StripHtml }}" />
 {% endblock %}
 {% block main %}
 <div class="container">
@@ -131,6 +131,7 @@
       </ul>
       <!-- END SOCIAL BUTTONS -->
       
+      {% include core_share_buttons.htm %}
 
       {% if data.Local.Event.AllowComments or data.Local.Event.Comments.size > 0  %}
       <!-- COMMENTS -->

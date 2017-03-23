@@ -1,0 +1,228 @@
+<script>
+  $(function(){
+    var navManager = new LateralNavigationManager();
+    navManager.initLateralSmoothNav();
+    $('#nav-lateral-select').val('{{ data.URL }}');
+  })
+</script>
+<script src="https://core.spreedly.com/payment-frame/payment-frame-0.5.min.js"></script>
+<script>
+
+  $(function () {
+    var spreedlyPaymentFrame = new Spreedly.PaymentFrame("{{ data.Local.SpreedlyEnvironmentKey }}");
+    spreedlyPaymentFrame.bind(document.getElementById('spreedly-iframe'));
+
+    spreedlyPaymentFrame.on('config', function(frame) {
+      //Style
+      frame.setStyle('body', 'margin: 0px;');
+      frame.setStyle('input', 'height: 28px;padding: 6px 10px 4px; font-size: 13px; color: #333; border-color: #949494; border-radius: 2px; -moz-box-shadow: none;-webkit-box-shadow: none; box-shadow: none; line-height: 1.42857143; background-color: #fff; background-image: none; border: 1px solid #ccc; transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s; border-color: #949494;');
+      frame.setStyle('#spf-number','width: 59.1%; margin-right: 25px; letter-spacing: 2px');
+      frame.setStyle('#spf-verification_value','width:19.676923%');
+
+      //PH
+      frame.setPlaceholder('#spf-verification_value','CVC');
+      {% if data.Coworker.CardNumber %}
+      frame.setPlaceholder('#spf-number','XXXX XXXX XXXX {{ data.Coworker.CardNumber }}');
+      {% else %}
+      frame.setPlaceholder('#spf-number','{% T Card Number %}');
+      {% endif %}
+
+      //Labels
+      frame.setText('label[for="spf-number"]', '');
+      frame.setText('label[for="spf-verification_value"]', '');
+
+      if(window.innerWidth <= 768){
+        frame.setStyle('#spf-number','width:92%; margin-bottom: 10px');
+        frame.setStyle('#spf-verification_value','width:92%');
+        $('#spreedly-iframe').height(90);
+      }
+
+      $('#spreedly-ccpay-button').attr('disabled', null);
+    });
+
+    spreedlyPaymentFrame.on('errors', function(errors) {
+      if(errors.length > 0){
+        app.showErrorMessage(errors[0].message);
+      }
+      for(var i = 0; i < errors.length; i++) {
+        var error = errors[i];
+        if(error["attribute"]) {
+          spreedlyPaymentFrame.setStyle('input#spf-' + error["attribute"], "border: 1px solid red;");
+          spreedlyPaymentFrame.setPlaceholder('input#spf-' + error["attribute"], error["message"]);
+          $('#' + error["attribute"]).css('border','1px solid red');
+        }
+      }
+      $('#spreedly-ccpay-button').attr('disabled', null);
+      $('#spreedly-ccpay-button').text('{% T Update payment details %}');
+    });
+
+    spreedlyPaymentFrame.on('paymentMethod', function(token, pmData) {
+      var tokenField = document.getElementById("payment_method_token");
+      tokenField.setAttribute("value", token);
+      var masterForm = document.getElementById('payment-form');
+      masterForm.submit();
+    });
+
+    $('.spreedlyButton').click(function (e) {
+      var btn = $(this);
+      var description = $(this).attr('data-description');
+
+      if(!description){
+        app.scrollToAnchorElement('payment-information')
+        e.preventDefault();
+        return;
+      }
+
+      var invoiceId = $(this).attr('data-invoiceId');
+      var originalText =  $(this).text();
+      app.showQuestion(description).then(function(result){
+        if(result){
+          btn.text('{% T Please wait %}');
+          btn.attr('disabled', 'disabled');
+          $.post('{% Url Invoices, TryPayment %}/' + invoiceId).then(function(result){
+            btn.text(originalText);
+            btn.attr('disabled', null);
+
+            if(!result.WasSuccessful) 
+              app.showErrorMessage(result.Message);
+            else{
+              app.showMessage('{% T Thank you for your payment %}')
+                 .then(function(){ location.reload(true); });
+              
+            }
+          });
+        }
+      })
+
+      return false;
+    });
+
+    $('#spreedly-ccpay-button').click(function () {
+
+      var url = $(this).attr('data-payUrl');
+      $('#payment-form').attr('action', url);
+
+      if ($('#spreedly-ccpay-button').attr('disabled')) return;
+      $('#spreedly-ccpay-button').attr('disabled', 'disabled');
+      $('#spreedly-ccpay-button').text('{% T Please wait... %}');
+
+      var paymentMethodFields = ['first_name', 'last_name', 'month', 'year', 'address1', 'city', 'country', 'zip', 'state']
+      for(var i = 0; i < paymentMethodFields.length; i++) {
+      	var field = paymentMethodFields[i];
+        spreedlyPaymentFrame.setParam(field, document.getElementById(field).value)
+	  }
+      spreedlyPaymentFrame.submit();
+
+    });
+
+    $('#ccpay-button').click(function () {
+      if ($('#ccpay-button').attr('disabled')) return;
+      $('#ccpay-button').attr('disabled', 'disabled');
+      $('#ccpay-button').text('{% T Please wait... %}');
+      $('#ccform').submit();
+    });
+  });
+</script>
+{% if data.Local.ForteEnabled %}
+<style>
+  .fortebtn {
+    margin-bottom: 10px;
+    background-color: #949494 !important;
+    border-color: #949494 !important;
+    color: #fff !important;
+    padding: 7px 20px !important;
+  }
+</style>
+<script type="text/javascript" src="https://checkout.forte.net/v1/js"></script>
+
+<script>
+  function forteCallback(e) {
+    var response = e.data || JSON.parse(e.data);
+    switch (response.event) {
+      case 'begin':
+        //call to forte checkout is successful
+        break;
+      case 'success':
+        $.post('/{{ data.Language }}/invoices/ForteResult', response)
+          .done(function (msg) {
+            app.showMessage("{% T Thank you, we'll process your payment shortly. %}");
+            setTimeout(function () { window.location.reload(1); }, 5000);
+          })
+          .fail(function (xhr, textStatus, errorThrown) {
+            app.showErrorMessage('Sorry, transaction failed. failed reason is ' + xhr.responseText);
+          });
+
+        break;
+      case 'failure':
+        app.showErrorMessage('Sorry, transaction failed. failed reason is ' + response.response_description);
+
+    }
+  }
+</script>
+{% endif %}
+
+{% if data.Local.StripeEnabled %}
+<script src="https://checkout.stripe.com/v2/checkout.js"></script>
+<script>
+  $('.stripePayButton').click(function () {
+    var el = $(this);
+    var token = function (res) {
+      var $input = $('<input type=hidden name=stripeToken />').val(res.id);
+      var payUrl = el.attr('data-payUrl');
+      window.location.href = payUrl + '&token=' + res.id + '&rnd=' + Math.floor((Math.random() * 100000) + 1);;
+    };
+
+    StripeCheckout.open({
+      key: '{{ data.Local.StripePublicKey }}',
+      address: false,
+      allowRememberMe: false,
+      email: '{{ data.Coworker.Email }}',
+      amount: el.attr('data-amount'),
+      currency: el.attr('data-currency'),
+      name: '{{ data.Business.Name }}',
+      description: el.attr('data-description'),
+      panelLabel: 'Checkout',
+      token: token
+    });
+
+    return false;
+  });
+</script>
+{% endif %}
+
+{% if data.Local.EpayEnabled %}
+<!-- EPAY -->
+<script charset="UTF-8" src="https://ssl.ditonlinebetalingssystem.dk/integration/ewindow/paymentwindow.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+  $('.epay').click(payWithEPay);
+  function payWithEPay(){
+    var invoiceNumber = $(this).attr('data-description');
+    var url = $(this).attr('data-payUrl');
+    var currency = $(this).attr('data-currency');
+    var amount = $(this).attr('data-amount');
+    var hash = $(this).attr('data-hash');
+    var email = $(this).attr('data-email');
+
+    paymentwindow = new PaymentWindow({
+      'merchantnumber': '{{ data.Local.EPayMerchant }}',
+      'amount': amount,
+      'currency': currency,
+      'orderid': invoiceNumber,
+      'instantcapture': 1,
+      'subscription': {% if data.Coworker.HasRegularPaymentContractNumber %}2{% else %}1{% endif %},
+      {% if data.Coworker.HasRegularPaymentContractNumber %}
+      'subscriptionid': '{{data.Coworker.RegularPaymentContractNumber}}',
+      {% endif %}
+      'instantcallback': 1,
+      'callbackurl': url,
+      'subscriptionname': email,
+      'accepturl': '{{ data.AbsoluteUri }}',
+      'cancelurl': '{{ data.AbsoluteUri }}',
+      'hash': hash
+    });
+    paymentwindow.open();
+  }
+{% endif %}
+
+</script>

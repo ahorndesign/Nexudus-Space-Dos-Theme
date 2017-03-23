@@ -24,26 +24,39 @@
     <!-- BREADCRUMBS -->
     <ol class="breadcrumb">
         <li><a href="{{ data.Business.HomeUrl }}">{% T Home %}</a></li>
+        {% if data.Local.OnlyEvents %}
+        <li><a href="{% Url Events, Index %}">{% T Events %}</a></li>
+        <li class="active">{% T Calendar %}</li>
+        {% else %}
         <li class="active">{% T Bookings %}</li>
+        {% endif %}
     </ol>
     <!-- END BREADCRUMBS -->
 
     <!-- PAGE HEADER -->
     <div class="page-header page-header--flex">
         <div class="page-header--flex__item">
+        {% if data.Local.OnlyEvents %}
+        <h1>{% T Events at {0} || data.Business.Name %}</h1>
+        {% else %}
         <h1>{% T Bookings %}</h1>
+        {% endif %}
+        
         </div>
         <div class="page-header--flex__item">
-        <div class="btn-toolbar">
-            {% if data.Coworker != null %}
-            <a href="{% Url Bookings, My %}" class="btn btn--secondary">{% T My bookings %}</a>
+            {% if data.Local.OnlyEvents == false %}
+            <div class="btn-toolbar">
+                {% if data.Coworker != null %}
+                <a href="{% Url Bookings, My %}" class="btn btn--secondary">{% T My bookings %}</a>
+                {% endif %}
+                <a href="#" onclick="bookingManager.createBooking(); return false;" class="btn btn--primary">{% T Make a booking %}</a>
+            </div>
             {% endif %}
-            <a href="#" onclick="bookingManager.createBooking(); return false;" class="btn btn--primary">{% T Make a booking %}</a>
-        </div>
         </div>
     </div>
     <!-- END PAGE HEADER -->
 
+    {% if data.Local.OnlyEvents == false %}
     <!-- FILTERS -->
     <div class="filters">
         <ul class="nav filters__nav">
@@ -58,6 +71,7 @@
         </ul>
     </div>
     <!-- END FILTERS -->
+    {% endif %}
 
     <!-- BOOKINGS -->
     <div class="bookings">

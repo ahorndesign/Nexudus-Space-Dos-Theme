@@ -50,7 +50,11 @@
           {% endfor %}
         </ul>
       </li>
-      
+      <li>
+        <a href="{% Url Bookings, Calendar, onlyevents: true %}">
+          {% T Calendar View %}
+        </a>
+      </li>
     </ul>
   </div>
   <!-- END FILTERS -->

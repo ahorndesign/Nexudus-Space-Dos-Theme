@@ -90,7 +90,7 @@
 $(function(){
     var settings = {
         formId: 'cancel-form',
-        formError: '{% T We would love to know the reason you decided to cancel your membership. Please complete the form with any information you think will help to improve {0} and its community. || data.Business.Name %}',
+        formError: "{% T We would love to know the reason you decided to cancel your membership. Please complete the form with any information you think will help to improve {0} and its community. || data.Business.Name %}",
         formData: {
             reason: null,
             notes: null
@@ -100,4 +100,5 @@ $(function(){
     fm.init();
 })
 </script>
+{% include core_priceplans_table_scripts.htm %}
 {% endblock %}

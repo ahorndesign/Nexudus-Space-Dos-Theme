@@ -3984,7 +3984,7 @@ a.board-list__more-replies {
   margin-top: 60px;
   text-align: center;
 }
-.credentials__confirm i {
+.credentials__confirm > i {
   font-size: 64px;
   color: #primarycolor;
 }

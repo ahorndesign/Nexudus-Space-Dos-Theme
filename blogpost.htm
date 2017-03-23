@@ -69,9 +69,7 @@
         <!-- BLOG BODY -->
         <div class="article-content">
           {% if data.Local.BlogPost.HasLargeImage %}
-          <img src="{% Url Blog, GetImage, id: data.Local.BlogPost.Id, h: 840, w: 1500 %}" alt="">
-          {% else %}
-          <img src="http://placehold.it/1500x840" alt="">
+          <img src="{% Url Blog, GetImage, id: data.Local.BlogPost.Id, w: 1500 %}" alt="">
           {% endif %}
 
           {{ data.Local.BlogPost.FullText }}

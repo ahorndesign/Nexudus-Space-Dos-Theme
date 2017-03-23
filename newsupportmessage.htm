@@ -35,7 +35,7 @@
         <form class="form" action="{% Url Support, NewMessage %}" method="POST" data-bind="with: formData, submit: $root.submitForm" id="new-message-form" novalidate>
 
           <div class="form-group" data-bind="visible: departments().length > 0">
-              <label for="">{% T Deptartment %}</label>
+              <label for="">{% T Department %}</label>
               <div class="dropdown">
                 <input data-bind="value: helpDeskDepartment() ? helpDeskDepartment().Id : null" name="Message.HelpDeskDepartment" type="hidden"">
             
