@@ -24,7 +24,7 @@
 	<div class="alert alert--info alert--icon" role="alert">
 	  <i class="fa fa-warning"></i>
 	  <b>{% T This subscription has not started yet. %}</b>
-	  {% T This plan is set to start on {0:d}. You will not have access to any of its benefits before that date. || contract.RenewalDate %}
+	  {% T This plan is set to start on {0:d}. You will not have access to any of its benefits before that date. || contract.StartDate %}
 	</div>
 	{% endif %}
 	{% if contract.CancellationDate != null %}
